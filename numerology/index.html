@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+ 	<meta charset="utf-8">
+ 	<title>Weathernumerology.faith</title>
+ 	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<link rel="shortcut icon" type="image/png" href=""/>
+	
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+	<script src="jq.js"></script>
+	<script src="http://stevenlevithan.com/assets/misc/date.format.js"></script>
+
+
+	<!-- <link rel="stylesheet" type="text/css" href="mystyle.css"> -->
+	<style>
+	html{min-height:100%;}
+	body{font-family:sans-serif; margin:0; min-height:100%; font-size:12px; letter-spacing:.01em; padding-left:5vw; background: url('weather.jpg'); background-size: cover; background-repeat:no-repeat;}
+	p{line-height:1.5em;  font-size:;}
+	header{transition:.5s; z-index:2; position:relative; top:0;}
+	header a.btn{margin-top:20px;	}
+	header.initial{top:30vh;}
+	header p{font-family:Georgia, serif; font-size:1.2em;}
+	#weather, #sysCtn, #numer{opacity:0;}
+
+	#weather.in, #sysCtn.in{opacity:1;}
+	.c2{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);}
+	header.out{display:none;}
+	.box{display:block; transition:.5s; max-width:350px; padding:20px 30px; background:#eee; border:1px solid #aaa; margin-bottom:5vh; box-shadow:0px 3px 15px rgba(0,0,0,0.2);}
+	.rdata{font-weight:bold; color:#000; text-transform:; letter-spacing: .03em; margin-left:10px;}
+	
+	
+	
+    #calcs .rdata{letter-spacing:3px; display:inline-block; position: relative;top:-3px; }
+    #calcs .rdata > div {letter-spacing:0; margin:0px 0px; display:inline-block;}
+    #ag .rdata {letter-spacing:0;}
+    #calcs strong{vertical-align: top; display:inline-block; min-width: 80px;}
+    #calcs > div{ border-bottom: 1px dotted #aaa;
+    padding: 7px 0; margin:7px 0;}
+
+    /*#calcs #ag, #calcs #final{margin-bottom:20px; padding-bottom:10px;}*/
+    #calcs #ag{border-bottom-width:0px;}
+
+	strong{text-transform: uppercase; font-size:9px; font-family: sans-serif; font-weight:normal; color:#777;}
+	.vSpace{margin-top:20px;}
+	a{color:inherit; text-decoration: none;}
+	.d1{background-color:#fff;}
+
+	#sysCtn{max-width:600px;min-width:350px; display:inline-block; ;}
+	
+	#cond{margin-bottom: 0;}
+	a.btn{background:white; border-radius:3px; background:#fff; display:inline-block; padding:4px 8px; cursor:pointer; font-family: sans-serif; font-size:11px; box-shadow:0px 3px 15px rgba(0,0,0,0.0);}
+	a.btn:hover{ text-decoration:none; background:#ff7675;}
+	h2{margin-top:0; font-family:Georgia, serif; font-size:1.1em; font-weight:normal; }
+	.b{color:#777; font-weight:normal;}
+	.b1{ margin-left:2px; margin-right:5px;}
+	.b2{color:#ff7675; margin-left:6px; margin-right:6px;}
+	.b3{color:#ff7675; margin-left:6px; margin-right:6px;}
+	
+	#date{font-family: monospace; font-size: 11px; margin-left:10px; letter-spacing:0;}
+	td{transition:.2s; cursor:default;}
+	#system table td{width:25px; border:1px solid #ccc; text-align: center; font-weight:bold;}
+	#system tr:first-child td{}	
+	#system tr:not(:first-child) td{font-weight:; color:#2980b9;}
+	
+	
+	.g{color:red;}
+	.hover{background:white;}
+	#numer {opacity:0; transition: 0s;}
+	#numer.in{opacity:1;}
+	#cont{transition:1s; height:auto;}
+	#cont.noheight{height:0; overflow:hidden;}
+	#contactbtn{font-weight: bold; padding:6px 12px;}
+	header.fade{opacity:.7;}
+	#numer p span{color:#ff7675;}
+	#numer p{font-family:Georgia, serif; font-size:16px; padding-top:20px;}
+	#numer p a{border-bottom:2px solid red; padding-bottom:2px;}
+	#numer p a:hover{border-color:black;}
+	@media (max-width: 767px){
+		
+	}
+
+	</style>
+
+</head>
+  
+<body>
+
+<header class="initial">
+	
+	<p class="box">Numbers are the universal language offered by the deity to humans as confirmation of the truth.<br><strong>- <a href="https://en.wikipedia.org/wiki/Augustine_of_Hippo" target="_blank">Augustine of Hippo</a></strong></p>
+	
+
+	<p class="box">What's the weather trying to tell you?<br><strong style="display:block;">- Augustine of Elephant</strong><a class="btn">Let's see</a></p>
+
+	
+</header>
+
+<div class="vSpace content" id="cont">
+	<div id="weather" class="box">
+		<h2>Your Weather<span id="date"></span></h2>
+		
+		<p id="loc" ><strong>Location:</strong> <span class="rdata"></span></p>
+		<p id="temp" ><strong>Temperature:</strong> <span class="rdata"></span></p>
+		<p id="cond" ><strong>Condition:</strong> <span class="rdata"></span></p>
+
+	</div>
+
+	<div class="box vSpace" id="sysCtn">
+		<div id="system">
+			<h2>The Latin System &mdash; <a href="https://en.wikipedia.org/wiki/Numerology#Latin_alphabet_systems" target="_blank" style="text-decoration: underline; color:red;">?</a></h2>
+			
+			<table>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<div id="numWeather" class="vSpace ">
+			<a class="btn" id = "match" style="">Match</a>
+			<div id="calcs" style="display:none;">
+				<div id="numLoc" class='calcsteps'><strong>Location:</strong> <div class="rdata"></div></div>
+				<div id="numTemp" class='calcsteps'><strong>Temperature:</strong> <div class="rdata"></div></div>
+				<div id="numCond" class='calcsteps'><strong>Condition:</strong> <div class="rdata"></div></div>
+				<a class="btn" id="calcbtn" style="">Calculate</a>
+				
+				<div id="ag" style="display:none;"><strong>Total:</strong> 
+					<div class="rdata"></div>
+				</div>
+
+				<a class="btn" id="contactbtn" style="display:none;">Contact the Cosmos</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div style="display:none;" class="box vspace" id="numer">
+	<h2>Message from The Cosmos:</h2>
+	<p></p>
+
+</div>
+
+<script src="wnum.js"></script>
+</body>
+</html>
