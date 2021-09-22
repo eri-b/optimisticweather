@@ -53,6 +53,8 @@ console.log(data);
     console.log(ipWhole);
     //awxCityLookUp(ipWhole); // accuweather
     document.title = 'Optimistic Weather - '+ ipCity;
+    fillChart2(forecastData);
+    showWeather();
   });
 
 
