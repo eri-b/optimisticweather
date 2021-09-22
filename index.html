@@ -5,7 +5,7 @@
  	<meta charset="utf-8">
  	<title>Optimistic Weather</title>
  	<meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32951228-5"></script>
 <script>
@@ -28,18 +28,18 @@
   *{font-weight:normal; font-family: sans-serif; letter-spacing:.03em;}
   body{margin:0; padding:0; font-size:10px; background:#eee;}
   td, th{
-    padding:12px 8px; 
+    padding:12px 8px;
   }
-  
+
   #map-embed-iframe{width:100%; height:100% !important;}
   .left, .right{
   display:inline-block;
   white-space: normal;
   vertical-align: top;}
-  
+
   .left{
-    padding:20px; 
-    width:35%; 
+    padding:20px;
+    width:35%;
     min-height:100vh;
     position:relative;
     box-sizing:border-box;
@@ -49,7 +49,7 @@
   .open .right{width:40%;}
 
   #weather2 table{table-layout: fixed; width:100%;}
-  
+
   #weather3 table tr td:not(:first-child):not(:nth-child(5)){text-align:center;}
 
   #weather3 table tr td:first-child{font-size:1.2em;}
@@ -61,7 +61,7 @@
   #weather3 table td a img:hover{opacity:1;}
   /*.outer{white-space: nowrap;  }*/
   table{border-collapse: collapse;}
-  
+
   .z{
     color: #555; display:none;
     background:rgba(0,0,0,.03);
@@ -69,11 +69,11 @@
 
 
   #weather3 table tr{border-bottom:10px solid #eee;}
-  
+
   #weather3 tr td:nth-child(5){
     padding-right:20px
   }
-  
+
   #weather3 tr td:nth-child(6),
   #weather3 tr td:nth-child(8),
   #weather3 tr td:nth-child(10)
@@ -108,7 +108,7 @@
   input[type='text']:hover{
     border: 1px #ccc solid;
   }
-  
+
 
   input[type='text']:focus{
     border: 1px #ccc solid;
@@ -130,7 +130,7 @@
   #curW{font-size:1.8em; margin-top:31px;}
   #curS img{width:30px; }
   #curS{margin-top:40px;}
-  
+
   #curI, #curT{margin-top:10px;}
   .curr{margin-top:20px;}
   #weather2{display:none;}
@@ -139,10 +139,10 @@
 .curr, .date{text-align:center;}
   #current .curr a:hover, #weather3 td a:hover{border-bottom-color: black;}
   #weather3.vis{opacity:1;}
-  
+
   .date>div{line-height:1.5em; display:inline-block; margin-left:10px;}
 
-  #extra{cursor:pointer; 
+  #extra{cursor:pointer;
     background: rgba(208, 97, 97, 0.25);
     padding:7px 10px;
     display:inline-block;
@@ -152,7 +152,7 @@
   #extra:hover{
     background: rgba(208, 97, 97, 0.35);
   }
-  
+
   .center{
     position: relative;
     left: 50%;
@@ -165,7 +165,7 @@
     margin-top:44px;
   }
   .input{display:inline-block; margin:20px 0px;}
-  
+
   #extra span.btnHide{display:none;}
   .open #extra span{display:none;}
   .open #extra span.btnHide{display:inline;}
@@ -183,16 +183,16 @@
     margin-top:10px;
   }
 
-  
+
 
   #info{
-    
+
     position:fixed;
     bottom:20px;
     right:20px;
     background:rgba(255,255,255,.5);
     z-index:2;
-    
+
   }
 
   #info > div{
@@ -220,8 +220,8 @@
 
   #info:hover{background:rgba(255, 255, 255, 0.75);}
 
-  
-  
+
+
   .currLoser a{
     text-decoration:none;
     color:inherit;
@@ -233,8 +233,8 @@
   @media (max-width: 900px){
   .left{width:100%; padding:0; min-height:0;}
   .right{
-    width:100vw; 
-    height:400px; 
+    width:100vw;
+    height:400px;
     margin-top:50px;
     position:relative;
     overflow-x:hidden;
@@ -250,7 +250,7 @@
   .left, .right{display:block;}
   .open .left{width:100%;}
   .open .right{width:100%;}
-  
+
   #info{
     position: relative;
     bottom: auto;
@@ -277,14 +277,14 @@
 	</style>
 
 </head>
-  
+
 <body>
 
 <div class="outer">
 <div class="left">
 
   <div id="current" class="wDiv center">
-  
+
   <div class="input center">
     <input type="text" id="text" value="" width="100">
     <a id="newSearch"><img src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698956-icon-111-search-128.png"/></a>
@@ -293,7 +293,7 @@
     <div></div>
     <div></div>
   </div>
-  
+
   <div id="curW" class="curr"></div>
 
 <div class="curr" id="curI"></div>
@@ -303,11 +303,11 @@
     <div><span>Loser 2</span><span>Source2</span></div>
     <div><span>Loser 2</span><span>Source2</span></div>
   </div> -->
-  
+
   <div id="curT" class="curr"></div>
-  
+
   <div id="curS" class="curr curS"></div>
-  
+
   </div>
 <!-- <p style="text-align:center;">Currently experiencing some tech issues, one minute</p> -->
   <div id="weather3" class="wDiv">
@@ -335,7 +335,7 @@
           <td></td><td></td><td></td><td></td><td></td>
           <td class="z"></td><td class="z"></td><td class="z"></td><td class="z"></td><td class="z"></td><td class="z"></td>
         </tr>
-        
+
       </tbody>
     </table>
 
@@ -348,11 +348,11 @@
 </div>
 
 <div id="info">
-  <div style="display:none;">Weather forecasts are usually wrong,<br>so we may as well pick the best of the bunch.
+  <div >Weather forecasts are usually wrong,<br>so we may as well pick the best of the bunch.
     <br><br>Forecasts are pulled from the Weather Channel, the NOAA, Accuweather, and Darksky.<br><br>The best forecast each day wins its spot on the forecast.
     <br><br>
     <a href="http://unfoundedlabs.com" style="" target="_blank">Unlab</a>
-</div><a>Info</a></div>
+</div><a style="display:none;">Info</a></div>
 
 <div id="mapDiv" class="right"></div>
 
