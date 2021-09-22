@@ -35,8 +35,8 @@ console.log(data);
     lat = "40.7128";
     lon = "-74.0060";
   }
-  
-}).done(function() { 
+
+}).done(function() {
   $(" #current input[type='text']").attr('value', ipCity);
     // Lat/Lng should have appeared from IP address
     newUrl();
@@ -45,7 +45,15 @@ console.log(data);
     //awxCityLookUp(ipWhole); // accuweather
     document.title = 'Optimistic Weather - '+ ipCity;
 
-});
+}).fail(function() {
+  $(" #current input[type='text']").attr('value', ipCity);
+    // Lat/Lng should have appeared from IP address
+    newUrl();
+    var ipWhole = ipCity +", "+ipReg;
+    console.log(ipWhole);
+    //awxCityLookUp(ipWhole); // accuweather
+    document.title = 'Optimistic Weather - '+ ipCity;
+  });
 
 
 
@@ -111,18 +119,18 @@ function newUrl(){
 
   url2 = "http://api.apixu.com/v1/forecast.json?key=2ebdee80f5764771b4b174024191204&q="+lat+","+lon;
   url2b = "http://api.apixu.com/v1/current.json?key=2ebdee80f5764771b4b174024191204&q="+lat+","+lon;
-  
+
   url3 = "https://api.weatherbit.io/v2.0/forecast/daily?&lat="+lat+"&lon="+lon+"&key=39cea9619ee34fc184c0b3e8998f6c44&units=I";
   url3b = "https://api.weatherbit.io/v2.0/current?&lat="+lat+"&lon="+lon+"&key=39cea9619ee34fc184c0b3e8998f6c44&units=I";
-  
-  
+
+
   url4 = "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&units=imperial&APPID=4b3cb43e74ccc7db969227da3d2e0064";
-  url4b = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&APPID=4b3cb43e74ccc7db969227da3d2e0064";  
+  url4b = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&APPID=4b3cb43e74ccc7db969227da3d2e0064";
 
 
   // MAP goes here
   urlMap = "https://darksky.net/map-embed/@radar,"+ lat +","+ lon +",7.js?embed=true&timeControl=true&fieldControl=true&defaultField=radar"
-  
+
   //call postcribe library
   $('#mapDiv').html("");
   postscribe('#mapDiv', "<script id='radar' src='"+ urlMap +"'></script>");
@@ -155,27 +163,27 @@ $.ajax({
         forecastData[ 0 ][ 3*i+3 ] = pdata.daily.data[i].summary;
         //forecastData[ 0 ][ 3*i+3 ] = pdata.daily.data[i].icon;
       };
-      
+
       currentData[0]=[];
       currentData[0][0]=source;
       currentData[0][1]= pdata.currently.temperature;//Temp
       currentData[0][2]= pdata.currently.summary;//Condition
       currentData[0][3]= "<a target='_blank' href='https://darksky.net/forecast/"+lat+","+lon+"'>"+source+"</a>";//URL
-      
 
-      
+
+
   }
-});  	
+});
 
 
 
 
   // Open Weather Map (Need to pay $40/mo for daily forecast access)
 
-  $.ajax({ 
-    url : url4, 
-    dataType : "jsonp", 
-    success : function(pdata) { 
+  $.ajax({
+    url : url4,
+    dataType : "jsonp",
+    success : function(pdata) {
       var temp = pdata.list[0].main.temp;
       var source = "The Open Weather Map";
       //console.log(pdata);
@@ -184,7 +192,7 @@ $.ajax({
       forecastData[1][0] = source;
       for (var i = 0; i < 5; i ++) {
       	var z = 8*i;
-        
+
         forecastData[ 1 ][ 3*i+3 ] = pdata.list[z].weather[0].description;
         var max = -999;
         var min = 999;
@@ -194,42 +202,42 @@ $.ajax({
         }
         forecastData[ 1 ][ 3*i+1 ] = max;
         forecastData[ 1 ][ 3*i+2 ] = min;
-        
+
       };
 
-      $.ajax({ 
-            url : url4b, 
-            dataType : "json", 
-            success : function(pdata) { 
+      $.ajax({
+            url : url4b,
+            dataType : "json",
+            success : function(pdata) {
               console.log(pdata);
               //var source = "<img title='The Weather Channel' src='img/openweather.png' />";
               var source = "Open Weather";
               var row = 3;
-              
+
               currentData[1]=[];
               currentData[1][0]=source;
               currentData[1][1]= pdata.main.temp;//Temp
               currentData[1][2]= pdata.weather[0].description;//Condition
               currentData[1][3]= "<a target='_blank' href='http://openweathermap.org'>"+source+"</a>";//URL
 
-            } 
+            }
           });
-    } 
+    }
   });
 
 
 
 
- 
+
 
 // Weatherbit NOAA
-$.ajax({ 
-    url : url3, 
-    dataType : "jsonp", 
-    success : function(pdata) { 
-      
-      var source = "NOAA";  
-       
+$.ajax({
+    url : url3,
+    dataType : "jsonp",
+    success : function(pdata) {
+
+      var source = "NOAA";
+
       forecastData[2]=[]; // create inner arrary
       forecastData[2][0] = source;
       for (var i = 0; i < 5; i++) {
@@ -240,29 +248,29 @@ $.ajax({
 
       // Delayed until after forecast is filled
       // Weather Underground / Weather.com (Current)
-        $.ajax({ 
-            url : url3b, 
-            dataType : "jsonp", 
-            success : function(pdata) { 
-              
+        $.ajax({
+            url : url3b,
+            dataType : "jsonp",
+            success : function(pdata) {
+
               var source = "<img title='NOAA' src='img/noaa.svg' />";
               source = "NOAA"
-              
+
               currentData[2]=[];
               currentData[2][0]=source;
               currentData[2][1]= pdata.data[0].temp;//Temp
               currentData[2][2]= pdata.data[0].weather.description;//Condition
               currentData[2][3]= "<a target='_blank' href='http://forecast.weather.gov/MapClick.php?lat="+lat+"&lon="+lon+"'>"+source+"</a>";//URL
-              
+
               sunset = pdata.data[0].sunset;
               sunrise = pdata.data[0].sunrise;
               time24 = pdata.data[0].ob_time;
               time24 = time24.slice(11);
               checkSunset();
-            } 
+            }
           });
 
-    } 
+    }
   });
 
 
@@ -286,9 +294,9 @@ $.ajax({
     var locationKey =  data[0].Key;
 
 
-    var forecastConditionsUrl = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + 
+    var forecastConditionsUrl = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" +
           locationKey + ".json?&apikey=9soKD1gtNHGo7AGn8f23YtqaSaTG1wAv";
-    
+
     var currentConditionsUrl = "http://dataservice.accuweather.com/currentconditions/v1/" + locationKey + "?apikey=9soKD1gtNHGo7AGn8f23YtqaSaTG1wAv";
     console.log(currentConditionsUrl);
 
@@ -299,7 +307,7 @@ $.ajax({
           cache: true,                    // Use cache for better reponse times
           //jsonpCallback: "awxCallback",   // Prevent unique callback name for better reponse times
           success: function (data) {
-            
+
             var source = "<img title='Accuweather' src='img/accuweather.jpg' />";
             source = "Accuweather";
 
@@ -322,20 +330,20 @@ $.ajax({
           cache: true,                    // Use cache for better reponse times
           //jsonpCallback: "awxCallback",   // Prevent unique callback name for better reponse times
           success: function (data) {
-            
+
             var source = "<img title='Accuweather' src='img/accuweather.jpg' />";
             source = "Accuweather";
 
               currentData[3]=[];
               currentData[3][0]=source;
-              currentData[3][1]= data[0].Temperature.Imperial.Value; //Temp 
+              currentData[3][1]= data[0].Temperature.Imperial.Value; //Temp
               currentData[3][2]= data[0].WeatherText; //Condition
               currentData[3][3]= "<a target='_blank' href='"+data[0].Link+"'>"+source+"</a>";//URL
-              
-            
+
+
           }
       });
-      
+
 
 
   };
@@ -371,7 +379,7 @@ function fillHeader(info){
 // fill charts with weather
 function fillChart2(forecastData){
 
-  // These are deprecated! 
+  // These are deprecated!
   /*
   for (var i = 0; i < 4; i++) {
     for (var j = 0; j < currentData[0].length; j++) {
@@ -381,7 +389,7 @@ function fillChart2(forecastData){
     //j=1 because you don't want to repeat the source.
     for (var j = 1; j < forecastData[0].length; j++) {
       $('#weather2 table tr:nth-child('+ (i+2) +')').append("<td>"+forecastData[i][j]+"</td>");
-    }; 
+    };
   };
   */
 
@@ -391,12 +399,12 @@ function fillChart2(forecastData){
   //cycle through all days
   for (var j = 0; j < numDays; j++) {
       var weatherA;
-      
+
 
       // FORECAST!
       // On given day, cycle through forecasts
       maxPoints=[-999999, ""]; //reset max
-      
+
       for (var i = 0; i < forecastData.length; i++) {
         weatherA = forecastData[i][3*j + 3];
         pointSystem(weatherA, i);
@@ -406,7 +414,7 @@ function fillChart2(forecastData){
 
       // This fills the winning weather!
       var winner = maxPoints[1]; //this is the index of the winning entry
-      
+
       var winningWeather = forecastData[winner][3*j + 3];
 
       current = false; // needed for check inside findIcon()
@@ -415,25 +423,25 @@ function fillChart2(forecastData){
 
       //$('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(2)').html(forecastData[winner][3*j + 3]); //weather (col 2)
       $('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(2)').html(icon); //weather (col 2)
-      
+
       $('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(3)').html(Math.round(forecastData[winner][3*j + 1])); //max (col 3)
       $('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(4)').html(Math.round(forecastData[winner][3*j + 2])); //min (col 4)
       $('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(5)').html(currentData[winner][3]); //source (col 5)
-      
+
 
       //Now we can fill the losing weather..
 
       var notWinner = [0, 1, 2];
 
       var result = notWinner.filter(function(elem){
-         return elem != winner; 
+         return elem != winner;
       });
-      
+
       icon = findIcon(forecastData[result[0]][3*j + 3]);
       //$('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(6)').html(forecastData[result[0]][3*j + 3]); //Weather
       $('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(6)').html(icon); //Weather
       $('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(7)').html(currentData[result[0]][3]); //Source
-      
+
       icon = findIcon(forecastData[result[1]][3*j + 3]);
       //$('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(8)').html(forecastData[result[1]][3*j + 3]); //Weather
       $('#weather3 table tr:nth-child('+ (j+1)+') td:nth-child(8)').html(icon); //Weather
@@ -447,13 +455,13 @@ function fillChart2(forecastData){
 
   };
 
-      
+
       // CURRENT! (Doesn't need to be inside of numDays loop)
-      
+
       var weatherB;
 
       maxPoints=[-999999, ""]; //reset max
-      
+
       //current weather calc
       for (var i = 0; i < currentData.length; i++) {
         weatherB = currentData[i][2]; //weather is in col2
@@ -465,7 +473,7 @@ function fillChart2(forecastData){
 
       current = true; // needed for check inside findIcon()
       icon = findIcon(currentData[winner][2]);
-      
+
       $('#curW').html(currentData[winner][2]); //weather
       $('#curI').html(icon); //weather
       $('#curT').html(Math.round(currentData[winner][1])+"&#176"); //temperature
@@ -479,13 +487,13 @@ function fillChart2(forecastData){
       // var notWinner = [0, 1, 2, 3];
 
       // var result = notWinner.filter(function(elem){
-      //    return elem != winner; 
+      //    return elem != winner;
       // });
 
       // icon = findIcon(currentData[result[0]][2]); // where the weather resides
       // $('.currLoser div:nth-child(1) span:nth-child(1)').html(icon);
       // $('.currLoser div:nth-child(1) span:nth-child(2)').html(currentData[result[0]][3]);
-      
+
       // icon = findIcon(currentData[result[1]][2]); // where the weather resides
       // $('.currLoser div:nth-child(2) span:nth-child(1)').html(icon);
       // $('.currLoser div:nth-child(2) span:nth-child(2)').html(currentData[result[1]][3]);
@@ -500,9 +508,9 @@ function fillChart2(forecastData){
 function findIcon(weather){
   var icon = "default.png";
   var weather = weather.toUpperCase();
-  
+
   // lower down the list is given overriding preference!
-  
+
   if(weather.includes("THUNDERSTORM")){icon = "thunderstorm.png"}
   if(weather.includes("DRIZZLE")){icon = "drizzle.png"}
   if(weather.includes("SHOWERS")){icon = "drizzle.png"}
@@ -515,35 +523,35 @@ function findIcon(weather){
   if(weather.includes("CLOUDY")){icon = "cloudy.png"}
   if(weather.includes("DREARY")){icon = "cloudy.png"}
   if(weather.includes("CLOUDS")){icon = "cloudy.png"}
-  if(weather.includes("OVERCAST")){icon = "cloudy.png"} 
-  
+  if(weather.includes("OVERCAST")){icon = "cloudy.png"}
+
   // if finding current forecast at night, change icons
   if((isDark==true) && (current == true)){
-    
+
     if(weather.includes("BROKEN")){icon = "partlycloudynight.png"}
     if(weather.includes("SCATTERED")){icon = "partlycloudynight.png"}
     if(weather.includes("INTERMITTENT")){icon = "partlycloudynight.png"}
     if(weather.includes("SOME")){icon = "partlycloudynight.png"}
-    if(weather.includes("FEW")){icon = "partlycloudynight.png"}  
-    if(weather.includes("CHANCE")){icon = "partlycloudynight.png"}  
+    if(weather.includes("FEW")){icon = "partlycloudynight.png"}
+    if(weather.includes("CHANCE")){icon = "partlycloudynight.png"}
     if(weather.includes("PARTLY")){icon = "partlycloudynight.png"}
     if(weather.includes("MOSTLY SUNNY")){icon = "clearnight.png"}
     if(weather.includes("CLEAR")){icon = "clearnight.png"}
   }
   else{
-    
+
     if(weather.includes("BROKEN")){icon = "partlysunny.png"}
     if(weather.includes("SCATTERED")){icon = "partlysunny.png"}
-    if(weather.includes("INTERMITTENT")){icon = "partlysunny.png"} 
-    if(weather.includes("CHANCE")){icon = "partlysunny.png"}  
-    if(weather.includes("SOME")){icon = "partlysunny.png"}  
-   	if(weather.includes("FEW")){icon = "partlysunny.png"}  
+    if(weather.includes("INTERMITTENT")){icon = "partlysunny.png"}
+    if(weather.includes("CHANCE")){icon = "partlysunny.png"}
+    if(weather.includes("SOME")){icon = "partlysunny.png"}
+   	if(weather.includes("FEW")){icon = "partlysunny.png"}
     if(weather.includes("PARTLY")){icon = "partlysunny.png"}
     if(weather.includes("MOSTLY SUNNY")){icon = "sunny.png"}
     if(weather.includes("SUNNY")){icon = "sunny.png"}
-    if(weather.includes("CLEAR")){icon = "sunny.png"}  
+    if(weather.includes("CLEAR")){icon = "sunny.png"}
   }
-  
+
 
   var iconHtml = "<img src='icons/"+icon+"' title='"+weather+"' />";
   return iconHtml;
@@ -551,7 +559,7 @@ function findIcon(weather){
 
 // This rates the weather!
 function pointSystem(str, i){
-  
+
   var points=0;
   var str = str.toUpperCase();
   if(str.includes("CLEAR")){points+= 15;}
@@ -620,21 +628,21 @@ function checkSunset(){
   if(sunset > sunrise){
 
     if (time24 > sunset){ isDark = true;}
-    if (time24 < sunrise){ isDark = true;}  
+    if (time24 < sunrise){ isDark = true;}
   }
-  
+
   //sunrise >sunset
   else{
-    
+
     if ((time24 > sunset) && (time24 < sunrise)){ isDark = true;}
   }
 }
 
 
 // Allow enter key to search
-$(document).on('keypress', function(e) { 
+$(document).on('keypress', function(e) {
   if(e.which == 13) {
-    $( "#newSearch" ).click();  
+    $( "#newSearch" ).click();
     }
 });
 
@@ -645,5 +653,3 @@ $('input[type="text"]')
     // resize on page load
     .each(resizeInput);
 */
-
-
