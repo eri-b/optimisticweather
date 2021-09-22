@@ -563,6 +563,10 @@ function findIcon(weather){
 function pointSystem(str, i){
 
   var points=0;
+  if (typeof str == 'undefined'){
+    return
+  }
+
   var str = str.toUpperCase();
   if(str.includes("CLEAR")){points+= 15;}
   if(str.includes("SUN")){points+= 10;}
