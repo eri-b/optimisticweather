@@ -119,15 +119,15 @@ function codeAddress() {
 function newUrl(){
   url = "https://api.darksky.net/forecast/d5d98e87f7b5cfc3cacc4f0539238087/"+lat+","+lon+"?exclude=minutely,hourly,alerts,flags";
 
-  url2 = "http://api.apixu.com/v1/forecast.json?key=2ebdee80f5764771b4b174024191204&q="+lat+","+lon;
-  url2b = "http://api.apixu.com/v1/current.json?key=2ebdee80f5764771b4b174024191204&q="+lat+","+lon;
+  url2 = "https://api.apixu.com/v1/forecast.json?key=2ebdee80f5764771b4b174024191204&q="+lat+","+lon;
+  url2b = "https://api.apixu.com/v1/current.json?key=2ebdee80f5764771b4b174024191204&q="+lat+","+lon;
 
   url3 = "https://api.weatherbit.io/v2.0/forecast/daily?&lat="+lat+"&lon="+lon+"&key=39cea9619ee34fc184c0b3e8998f6c44&units=I";
   url3b = "https://api.weatherbit.io/v2.0/current?&lat="+lat+"&lon="+lon+"&key=39cea9619ee34fc184c0b3e8998f6c44&units=I";
 
 
-  url4 = "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&units=imperial&APPID=4b3cb43e74ccc7db969227da3d2e0064";
-  url4b = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&APPID=4b3cb43e74ccc7db969227da3d2e0064";
+  url4 = "https://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&units=imperial&APPID=4b3cb43e74ccc7db969227da3d2e0064";
+  url4b = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&APPID=4b3cb43e74ccc7db969227da3d2e0064";
 
 
   // MAP goes here
